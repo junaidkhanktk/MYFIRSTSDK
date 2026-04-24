@@ -40,10 +40,10 @@ android {
 }
 
 dependencies {
-    implementation(libs.appcompat.v7)
+/*    implementation(libs.appcompat.v7)
     testImplementation(libs.junit)
     androidTestImplementation(libs.runner)
-    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.espresso.core)*/
 }
 
 afterEvaluate {
