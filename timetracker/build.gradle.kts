@@ -1,14 +1,21 @@
+import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.publish.PublishingExtension
+
 plugins {
     alias(libs.plugins.android.library)
+    `maven-publish`
 }
 
 android {
     namespace = "com.example.timetracker"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
+    compileSdk = 36
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
         }
     }
+
 
     defaultConfig {
         minSdk = 24
@@ -38,3 +45,17 @@ dependencies {
     androidTestImplementation(libs.runner)
     androidTestImplementation(libs.espresso.core)
 }
+
+afterEvaluate {
+    configure<PublishingExtension> {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+                groupId = project.findProperty("group") as? String ?: "com.example"
+                artifactId = "timetracker"
+                version = project.findProperty("version") as? String ?: "1.0.0"
+            }
+        }
+    }
+}
+
